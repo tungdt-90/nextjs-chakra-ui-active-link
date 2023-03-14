@@ -1,13 +1,15 @@
 import {Link, LinkProps as ChakraLinkProps} from "@chakra-ui/next-js";
 import {useColorModeValue} from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import {LinkProps} from "next/link";
+import {LinkProps as NextLinkProps} from "next/link";
 
-export default function NavLink ({ href, children, ...rest }: ChakraLinkProps & LinkProps) {
+export default function NavLink ({ href, children, ...rest }: ChakraLinkProps & NextLinkProps) {
     const router = useRouter();
+    const isActive = router.asPath === href;
 
     return (
         <Link
+            className={isActive ? 'active-class' : ''}
             px={2}
             py={1}
             rounded={'md'}
@@ -20,7 +22,7 @@ export default function NavLink ({ href, children, ...rest }: ChakraLinkProps & 
                 bg: useColorModeValue('gray.200', 'gray.700'),
             }}
             href={href}
-            aria-current={router.asPath === href ? 'page' : undefined}
+            aria-current={isActive ? 'page' : undefined}
             {...rest}
         >
             {children}
